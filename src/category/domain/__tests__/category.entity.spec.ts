@@ -1,3 +1,4 @@
+import { Uuid } from "../../../shared/domain/value-object/uuid.vo";
 import { Category } from "../Category.entity";
 
 describe("Category Entity unit tests", () => {
@@ -11,21 +12,22 @@ describe("Category Entity unit tests", () => {
       expect(category.description).toBeNull();
       expect(category.isActive).toBe(true);
       expect(category.createdAt).toBeInstanceOf(Date);
-      expect(category.id).toBeDefined();
+      expect(category.id).toBeInstanceOf(Uuid);
+      
     });
 
     it("should create a category with provided values", () => {
       const createdAt = new Date("2021-01-01");
 
       const category = new Category({
-        id: "123",
+        id: new Uuid(),
         name: "Test Category",
         description: "Test Description",
         isActive: false,
         createdAt,
       });
 
-      expect(category.id).toBe("123");
+      expect(category.id).toBeInstanceOf(Uuid);
       expect(category.name).toBe("Test Category");
       expect(category.description).toBe("Test Description");
       expect(category.isActive).toBe(false);
@@ -122,7 +124,7 @@ describe("Category Entity unit tests", () => {
       const createdAt = new Date("2021-01-01");
 
       const category = new Category({
-        id: "123",
+        id: new Uuid(),
         name: "Category",
         description: "Description",
         isActive: true,
@@ -130,7 +132,7 @@ describe("Category Entity unit tests", () => {
       });
 
       expect(category.toJson()).toStrictEqual({
-        id: "123",
+        id: expect.any(String),
         name: "Category",
         description: "Description",
         isActive: true,

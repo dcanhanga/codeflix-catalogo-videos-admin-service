@@ -1,5 +1,7 @@
+import { Uuid } from "../../shared/domain/value-object/uuid.vo";
+
 export type CategoryConstructorProps = {
-  id?: string;
+  id?: Uuid;
   name: string;
   description?: string | null;
   isActive?: boolean;
@@ -13,13 +15,13 @@ export type CreateCategoryCommand = {
 };
 
 export class Category {
-  id: string;
+  id: Uuid;
   name: string;
   description: string | null;
   isActive: boolean;
   createdAt: Date;
     constructor(props: CategoryConstructorProps) {     
-    this.id = props.id?? Date.now().toLocaleString();
+    this.id = props.id ?? new Uuid();
     this.name = props.name;
     this.description = props.description?? null;
     this.isActive = props.isActive?? true;
@@ -46,7 +48,7 @@ export class Category {
     }
     toJson() {
       return {
-        id: this.id,
+        id: this.id.id,
         name: this.name,
         description: this.description,
         isActive: this.isActive,
